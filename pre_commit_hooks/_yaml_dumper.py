@@ -4,21 +4,33 @@ from ruamel.yaml import *
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 
-pattern = re.compile("\n{3,}")
+pattern1 = re.compile("\n{3,}")
+pattern2 = re.compile("\n +")
 
 
 class RemoveMultiEmptyLineEmitter(Emitter):
-    def write_comment(self, comment, *args, **kwargs):
-        comment.value = pattern.sub(comment.value, "\n\n")
+    def write_plain(self, text, split=True):  # type: (Any, Any) -> None
+        super().write_plain(text, False)
+
+    def write_comment(self, comment: CommentToken, *args, **kwargs):
+        if self.column:
+            comment.start_mark.column = self.column + 2
+        else:
+            comment.start_mark.column = 0
+        comment.value = pattern1.sub("\n\n", comment.value)
+        comment.value = pattern2.sub("\n", comment.value)
+        comment.value = comment.value.lstrip(" ")
         super().write_comment(comment, *args, **kwargs)
 
 
-class RemoveMultiEmptyLineRoundTripDumper(RemoveMultiEmptyLineEmitter, Serializer, RoundTripRepresenter, VersionedResolver):
+class RemoveMultiEmptyLineRoundTripDumper(
+    RemoveMultiEmptyLineEmitter, Serializer, RoundTripRepresenter, VersionedResolver
+):
     def __init__(
         self,
         stream,
         default_style=None,
-        default_flow_style=None,
+        default_flow_style=True,
         canonical=None,
         indent=None,
         width=None,
@@ -47,6 +59,11 @@ class RemoveMultiEmptyLineRoundTripDumper(RemoveMultiEmptyLineEmitter, Serialize
             prefix_colon=prefix_colon,
             dumper=self,
         )
+        self.best_map_indent = indent
+        self.sequence_dash_offset = indent
+        self.best_sequence_indent = indent * 2
+        self.allow_space_break = True
+
         Serializer.__init__(
             self,
             encoding=encoding,
