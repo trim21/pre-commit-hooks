@@ -1,0 +1,5 @@
+-   id: yamlfmt
+    name: format yaml
+    entry: yamlfmt
+    language: python
+    types: [yaml]
