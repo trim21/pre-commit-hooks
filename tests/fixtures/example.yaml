@@ -3,7 +3,7 @@ e: ee                                                        # 122
  # 233
 
 jobs:
-  - template: /.ci/templates/job.yaml # com
+  - template: /.ci/templates/job.yaml #   com
     parameters:
       name: Binary
       pythonVersions: ['3.7']

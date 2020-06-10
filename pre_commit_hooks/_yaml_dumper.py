@@ -6,6 +6,7 @@ from ruamel.yaml.serializer import Serializer
 
 pattern1 = re.compile("\n{3,}")
 pattern2 = re.compile("\n +")
+pattern3 = re.compile("# +")
 
 
 class RemoveMultiEmptyLineEmitter(Emitter):
@@ -13,6 +14,9 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         super().write_plain(text, False)
 
     def write_comment(self, comment: CommentToken, *args, **kwargs):
+        if comment.start_mark.column:
+            comment.value = pattern3.sub("# ", comment.value)
+
         if self.column:
             comment.start_mark.column = self.column + 2
         else:
