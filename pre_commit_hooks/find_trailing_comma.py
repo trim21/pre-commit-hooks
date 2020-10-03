@@ -6,17 +6,8 @@ from typing import List, Tuple, Generator
 
 from tokenize_rt import ESCAPED_NL, UNIMPORTANT_WS, Token, Offset, src_to_tokens
 
-Call = collections.namedtuple("Call", ("node", "star_args", "arg_offsets"))
-Func = collections.namedtuple("Func", ("node", "star_args", "arg_offsets"))
-Class = collections.namedtuple("Class", ("node", "star_args", "arg_offsets"))
-Literal = collections.namedtuple("Literal", ("node",))
-Fix = collections.namedtuple("Fix", ("braces", "multi_arg", "initial_indent"))
-
 NEWLINES = frozenset((ESCAPED_NL, "NEWLINE", "NL"))
 NON_CODING_TOKENS = frozenset(("COMMENT", ESCAPED_NL, "NL", UNIMPORTANT_WS))
-INDENT_TOKENS = frozenset(("INDENT", UNIMPORTANT_WS))
-START_BRACES = frozenset(("(", "{", "["))
-END_BRACES = frozenset((")", "}", "]"))
 
 
 def ast_parse(contents_text):
@@ -49,12 +40,12 @@ class FindNodes(ast.NodeVisitor):
     def visit_Tuple(self, node):
         if node.elts:
             if _to_offset(node) == _to_offset(node.elts[0]):
-                self.tuples[_to_offset(node)] = Literal(node)
+                self.tuples[_to_offset(node)] = node
             # in < py38 tuples lie about offset -- later we must backtrack
             elif sys.version_info < (3, 8):  # pragma: no cover (<py38)
-                self.tuples[_to_offset(node)] = Literal(node)
+                self.tuples[_to_offset(node)] = node
             else:  # pragma: no cover (py38+)
-                self.literals[_to_offset(node)] = Literal(node)
+                self.literals[_to_offset(node)] = node
         self.generic_visit(node)
 
 
@@ -92,7 +83,7 @@ def _find_danger(contents_text):
         if not token.src:
             continue
         if token.offset in visitor.tuples:
-            t: ast.Tuple = visitor.tuples[token.offset][0]
+            t: ast.Tuple = visitor.tuples[token.offset]
             if len(t.elts) == 1:
                 r = _find_tuple(i, tokens)
                 if not r:
@@ -100,7 +91,7 @@ def _find_danger(contents_text):
                     dangers.append((line, contents_text.splitlines()[line - 1]))
         elif token.offset in visitor.literals:
             print(token.src)
-            t: ast.Tuple = visitor.literals[token.offset][0]
+            t: ast.Tuple = visitor.literals[token.offset]
             print(t)
             if token.src == "(":
                 continue
