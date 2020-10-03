@@ -1,6 +1,13 @@
 import re
 
-from ruamel.yaml import *
+from ruamel.yaml import (
+    Any,
+    CommentToken,
+    Optional,
+    RoundTripRepresenter,
+    StreamType,
+    VersionedResolver,
+)
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 

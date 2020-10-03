@@ -1,7 +1,7 @@
 import argparse
-import os
 import sys
 from io import StringIO
+
 from ruamel import yaml
 
 from pre_commit_hooks._yaml_dumper import RemoveMultiEmptyLineRoundTripDumper
@@ -48,10 +48,16 @@ def main() -> int:
         action="store_true",
     )
     parser.add_argument(
-        "--indent", type=int, help="indent", default=2,
+        "--indent",
+        type=int,
+        help="indent",
+        default=2,
     )
     parser.add_argument(
-        "--width", type=int, help="best width", default=100,
+        "--width",
+        type=int,
+        help="best width",
+        default=100,
     )
     parser.add_argument("file", help="file to parse", nargs="*")
 
