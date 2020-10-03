@@ -6,8 +6,8 @@ from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 
 pattern1 = re.compile("\n{3,}")
-pattern2 = re.compile("\n +")
-pattern3 = re.compile("# +")
+# pattern2 = re.compile("\n +")
+pattern3 = re.compile("# *")
 
 
 class RemoveMultiEmptyLineEmitter(Emitter):
@@ -15,22 +15,22 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         super().write_plain(text, False)
 
     def write_comment(self, comment: CommentToken, *args, **kwargs):
+        """write line break or comment with line break"""
+        line_break_num = 2
+        if comment.value.startswith("#"):
+            line_break_num = 3
+        comment.value = pattern1.sub("\n" * line_break_num, comment.value)
         if comment.start_mark.column:
-            if comment.value.startswith("# "):
-                comment.value = pattern3.sub("# ", comment.value)
-            else:
-                comment.value = "# " + comment.value[1:]
+            # comment after line
+            comment.value = pattern3.sub("# ", comment.value)
             if comment.value.strip() == "#":
-                comment.value = ""
+                comment.value = comment.value.lstrip("# ")
         if self.column:
-            comment.start_mark.column = self.column + 2
+            if comment.value.strip():
+                comment.start_mark.column = self.column + 2
         else:
             comment.start_mark.column = 0
-        comment.value = pattern1.sub("\n\n", comment.value)
-        comment.value = pattern2.sub("\n", comment.value)
-        comment.value = comment.value.lstrip(" ")
-        if comment.value:
-            super().write_comment(comment, *args, **kwargs)
+        super().write_comment(comment, *args, **kwargs)
 
 
 class RemoveMultiEmptyLineRoundTripDumper(

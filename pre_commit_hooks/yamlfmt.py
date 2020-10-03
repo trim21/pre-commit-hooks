@@ -21,11 +21,11 @@ def round_trip(sin, indent: int, width: int):
 
 def format_file(fs, write, indent: int, width: int):
     ret = 0
-    with open(fs, "r+", encoding="utf8", newline="") as f:
+    with open(fs, "r+", encoding="utf8") as f:
         before = f.read()
-        s = StringIO(initial_value=before)
-        s.seek(0)
-        after = round_trip(s, indent, width).strip(" \n") + "\n"
+        with StringIO(initial_value=before) as s:
+            s.seek(0)
+            after = round_trip(s, indent, width).strip(" \n") + "\n"
         if before != after:
             if write:
                 print(f"fixing {fs}")
