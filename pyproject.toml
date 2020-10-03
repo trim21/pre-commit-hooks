@@ -8,9 +8,11 @@ packages = [{ include = "pre_commit_hooks" }]
 [tool.poetry.dependencies]
 python = "^3.6.1"
 "ruamel.yaml" = "0.16.10"
+poetry = "^1.1.0"
 
 [tool.poetry.scripts]
 yamlfmt = 'pre_commit_hooks.yamlfmt:main'
+poetry_check_lock = 'pre_commit_hooks.poetry_check_lock:main'
 
 [tool.poetry.dev-dependencies]
 # tests
