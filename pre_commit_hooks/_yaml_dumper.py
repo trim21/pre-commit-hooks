@@ -1,6 +1,7 @@
 import re
+from typing import Any
 
-from ruamel.yaml import Any, CommentToken, VersionedResolver, RoundTripRepresenter
+from ruamel.yaml import CommentToken, VersionedResolver, RoundTripRepresenter
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 

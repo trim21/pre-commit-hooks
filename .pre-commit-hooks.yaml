@@ -12,3 +12,10 @@
     language: python
     pass_filenames: false
     files: ^(pyproject\.toml)|(poetry\.lock)$
+
+  - id: find-trailing-comma
+    name: Find trailing commas
+    description: Find trailing commas which make single value a tuple
+    entry: find_trailing_comma
+    language: python
+    types: [python]
