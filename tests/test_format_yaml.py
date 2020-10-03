@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 
 from pre_commit_hooks.yamlfmt import format_file
@@ -8,13 +10,13 @@ _WIDTH = 88
 
 @pytest.fixture()
 def format_yaml(tmpdir):
-    def format_f(content):
+    def format_f(content: str):
         p = tmpdir / "test.yaml"
-        with open(p, "w+", encoding="utf-8") as f:
-            f.write(content)
+        with open(p, "wb") as f:
+            f.write(content.encode())
         format_file(p, True, _INDENT, _WIDTH)
-        with open(p, encoding="utf-8", newline=None) as f:
-            return f.read()
+        with open(p, "rb") as f:
+            return f.read().decode()
 
     return format_f
 
@@ -25,6 +27,10 @@ def test_object_space(format_yaml):
 
 def test_line_break(format_yaml):
     assert format_yaml("a: 1\nb: 2\n") == "a: 1\nb: 2\n"
+
+
+def test_line_break_2(format_yaml):
+    assert format_yaml("a: 1\r\nb: 2\r\n") == "a: 1\nb: 2\n"
 
 
 def test_list_indent(format_yaml):
@@ -162,3 +168,12 @@ def test_best_practice(tmpdir):
     with open(p, "wb") as f:
         f.write(b"a: 1\nb: 2\n")
     assert not format_file(p, True, _INDENT, _WIDTH)
+
+
+def test_format_file(tmpdir):
+    p = tmpdir / "a.yaml"
+    with open(p, "wb") as f:
+        f.write(b"a: 1\nb: 2\n")
+    with mock.patch("pre_commit_hooks.yamlfmt.round_trip") as m:
+        m.return_value = "a: 1\nb: 2\n"
+        assert not format_file(p, True, _INDENT, _WIDTH)

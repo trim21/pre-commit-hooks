@@ -1,4 +1,5 @@
 import sys
+import difflib
 import argparse
 from io import StringIO
 
@@ -21,21 +22,31 @@ def round_trip(sin, indent: int, width: int):
 
 def format_file(fs, write, indent: int, width: int):
     ret = 0
-    with open(fs, "r+", encoding="utf8") as f:
+    with open(fs, encoding="utf8", newline="\n") as f:
         before = f.read()
-        with StringIO(initial_value=before) as s:
-            s.seek(0)
-            after = round_trip(s, indent, width).strip(" \n") + "\n"
-        if before != after:
-            if write:
-                print(f"fixing {fs}")
-            ret = 1
+    with StringIO(initial_value=before.replace("\r\n", "\n"), newline="\n") as s:
+        s.seek(0)
+        after = (
+            "\n".join(round_trip(s, indent, width).strip(" \n").splitlines()).strip()
+            + "\n"
+        )
+    if before != after:
         if write:
-            f.seek(0)
-            f.write(after)
-            f.truncate()
+            print(f"fixing {fs}")
         else:
-            print(after)
+            print(
+                "".join(
+                    difflib.unified_diff(
+                        before.splitlines(True),
+                        after.splitlines(True),
+                    ),
+                )
+            )
+        ret = 1
+    if write:
+        if ret:
+            with open(fs, "w", encoding="utf8", newline="\n") as f:
+                f.write(after)
     return ret
 
 
