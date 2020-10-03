@@ -1,4 +1,9 @@
 repos:
+  - repo: https://github.com/Trim21/pre-commit-hooks
+    rev: c37e29c1e823c5ce25cac879a0aa7fd63d387c25  # frozen: v0.0.1
+    hooks:
+      - id: yamlfmt
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: e1668fe86af3810fbca72b8653fe478e66a0afdc  # frozen: v3.2.0
     hooks:
