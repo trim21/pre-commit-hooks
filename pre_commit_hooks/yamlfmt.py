@@ -25,7 +25,7 @@ def format_file(fs, write, indent: int, width: int):
         before = f.read()
         s = StringIO(initial_value=before)
         s.seek(0)
-        after = round_trip(s, indent, width).rstrip("\n") + "\n"
+        after = round_trip(s, indent, width).strip(" \n") + "\n"
         if before != after:
             if write:
                 print(f"fixing {fs}")

@@ -16,8 +16,12 @@ class RemoveMultiEmptyLineEmitter(Emitter):
 
     def write_comment(self, comment: CommentToken, *args, **kwargs):
         if comment.start_mark.column:
-            comment.value = pattern3.sub("# ", comment.value)
-
+            if comment.value.startswith("# "):
+                comment.value = pattern3.sub("# ", comment.value)
+            else:
+                comment.value = "# " + comment.value[1:]
+            if comment.value.strip() == "#":
+                comment.value = ""
         if self.column:
             comment.start_mark.column = self.column + 2
         else:
@@ -25,7 +29,8 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         comment.value = pattern1.sub("\n\n", comment.value)
         comment.value = pattern2.sub("\n", comment.value)
         comment.value = comment.value.lstrip(" ")
-        super().write_comment(comment, *args, **kwargs)
+        if comment.value:
+            super().write_comment(comment, *args, **kwargs)
 
 
 class RemoveMultiEmptyLineRoundTripDumper(
