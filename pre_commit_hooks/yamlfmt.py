@@ -1,5 +1,5 @@
-import argparse
 import sys
+import argparse
 from io import StringIO
 
 from ruamel import yaml
@@ -11,7 +11,7 @@ def round_trip(sin, indent: int, width: int):
     y = yaml.round_trip_load(sin, preserve_quotes=False)
     return yaml.round_trip_dump(
         y,
-        Dumper=RemoveMultiEmptyLineRoundTripDumper,  # 233
+        Dumper=RemoveMultiEmptyLineRoundTripDumper,
         allow_unicode=True,
         indent=indent,
         default_flow_style=True,

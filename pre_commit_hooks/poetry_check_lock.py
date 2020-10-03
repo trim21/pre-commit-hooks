@@ -1,7 +1,7 @@
 from pathlib import Path
 
-import poetry.poetry
 import poetry.utils
+import poetry.poetry
 from poetry.factory import Factory
 
 

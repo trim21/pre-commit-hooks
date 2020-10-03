@@ -1,13 +1,6 @@
 import re
 
-from ruamel.yaml import (
-    Any,
-    CommentToken,
-    Optional,
-    RoundTripRepresenter,
-    StreamType,
-    VersionedResolver,
-)
+from ruamel.yaml import Any, CommentToken, VersionedResolver, RoundTripRepresenter
 from ruamel.yaml.emitter import Emitter
 from ruamel.yaml.serializer import Serializer
 
@@ -35,7 +28,10 @@ class RemoveMultiEmptyLineEmitter(Emitter):
 
 
 class RemoveMultiEmptyLineRoundTripDumper(
-    RemoveMultiEmptyLineEmitter, Serializer, RoundTripRepresenter, VersionedResolver
+    RemoveMultiEmptyLineEmitter,
+    Serializer,
+    RoundTripRepresenter,
+    VersionedResolver,
 ):
     def __init__(
         self,
@@ -43,7 +39,7 @@ class RemoveMultiEmptyLineRoundTripDumper(
         default_style=None,
         default_flow_style=True,
         canonical=None,
-        indent=None,
+        indent=2,
         width=None,
         allow_unicode=None,
         line_break=None,
@@ -56,7 +52,6 @@ class RemoveMultiEmptyLineRoundTripDumper(
         top_level_colon_align=None,
         prefix_colon=None,
     ):
-        # type: (StreamType, Any, Optional[bool], Optional[int], Optional[int], Optional[int], Optional[bool], Any, Any, Optional[bool], Optional[bool], Any, Any, Any, Any, Any) -> None  # NOQA
         RemoveMultiEmptyLineEmitter.__init__(
             self,
             stream,

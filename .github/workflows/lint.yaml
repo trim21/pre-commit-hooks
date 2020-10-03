@@ -27,7 +27,7 @@ jobs:
       - uses: Trim21/install-poetry-project@dist/v1
 
       - name: mypy
-        run: mypy beancount_v2_budget
+        run: mypy pre_commit_hooks
 
   pre-commit:
     runs-on: ubuntu-latest
