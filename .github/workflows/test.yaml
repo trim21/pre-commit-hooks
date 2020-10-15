@@ -17,5 +17,6 @@ jobs:
       - name: test
         run: coverage run -m pytest
       - run: bash <(curl -s https://codecov.io/bash) -F py_${PYTHON//./}
+        shell: bash
         env:
           PYTHON: ${{ matrix.python }}
