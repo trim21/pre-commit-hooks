@@ -24,7 +24,7 @@ find_trailing_comma = 'pre_commit_hooks.find_trailing_comma:main'
 # tests
 pytest = "==5.4.3"
 pytest-github-actions-annotate-failures = "==0.1.0"
-coverage = "^5.1"
+coverage = "5.2.1"
 # linter and formatter
 pre-commit = "==2.4.0"
 flake8 = '==3.8.2'
