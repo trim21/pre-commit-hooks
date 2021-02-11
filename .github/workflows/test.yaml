@@ -5,6 +5,7 @@ on:
       - '*'
       - '**'
       - '!renovate/**'
+      - '!chore/update-pre-commit'
   create:
     tags:
       - v*
