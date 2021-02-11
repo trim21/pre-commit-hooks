@@ -1,6 +1,6 @@
 ```yaml
   - repo: https://github.com/Trim21/pre-commit-hooks
-    rev: v0.2.2
+    rev: ''
     hooks:
       - id: yamlfmt
       - id: poetry-check-lock
