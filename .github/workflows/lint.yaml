@@ -1,6 +1,19 @@
 name: lint
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '*'
+      - '**'
+      - '!renovate/**'
+  create:
+    tags:
+      - v*
+  pull_request:
+    branches:
+      - '*'
+      - '**'
+
 jobs:
   flake8:
     runs-on: ubuntu-latest
