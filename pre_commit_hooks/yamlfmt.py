@@ -2,6 +2,7 @@ import sys
 import difflib
 import argparse
 from io import StringIO
+from textwrap import dedent
 
 from ruamel import yaml
 
@@ -27,7 +28,9 @@ def format_file(fs, write, indent: int, width: int):
     with StringIO(initial_value=before.replace("\r\n", "\n"), newline="\n") as s:
         s.seek(0)
         after = (
-            "\n".join(round_trip(s, indent, width).strip(" \n").splitlines()).strip()
+            "\n".join(
+                dedent(round_trip(s, indent, width)).strip(" \n").splitlines(),
+            ).strip()
             + "\n"
         )
     if before != after:

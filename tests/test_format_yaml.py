@@ -177,3 +177,24 @@ def test_format_file(tmpdir):
     with mock.patch("pre_commit_hooks.yamlfmt.round_trip") as m:
         m.return_value = "a: 1\nb: 2\n"
         assert not format_file(p, True, _INDENT, _WIDTH)
+
+
+def test_top_array_with_indent(format_yaml):
+    assert (
+        format_yaml(
+            """
+  - id: yamlfmt
+    name: format yaml
+
+  - id: poetry-check-lock
+    name: Check poetry.lock fresh
+""",
+        )
+        == """
+- id: yamlfmt
+  name: format yaml
+
+- id: poetry-check-lock
+  name: Check poetry.lock fresh
+""".lstrip()
+    )
