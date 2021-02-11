@@ -1,11 +1,13 @@
 repos:
   - repo: https://github.com/Trim21/pre-commit-hooks
-    rev: c37e29c1e823c5ce25cac879a0aa7fd63d387c25  # frozen: v0.0.1
+    rev: c7a95cc4bd7861446be192a3b83c7a2ca1d6d910  # frozen: v0.2.3
     hooks:
       - id: yamlfmt
+      - id: poetry-check-lock
+      - id: find-trailing-comma
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: e1668fe86af3810fbca72b8653fe478e66a0afdc  # frozen: v3.2.0
+    rev: 6e2418c5521b7d606e72914dced3253f9ace1205  # frozen: v3.4.0
     hooks:
       - id: check-case-conflict
       - id: check-ast
@@ -35,7 +37,7 @@ repos:
         args: [--remove]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: f766c29ec4bb6cf2674b81959871e59d5400380a  # frozen: v2.7.2
+    rev: d94dd3486f99af99b5779e38e60a69bf97522051  # frozen: v2.10.0
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
@@ -46,13 +48,8 @@ repos:
       - id: doc8
         args: [--max-line-length, '88', --file-encoding, utf-8]
 
-  - repo: https://github.com/Trim21/poetry-check-lock
-    rev: 85c22f5c571ebc5ba8c935ae5aeb20ec0a9a3add  # frozen: v0.0.4
-    hooks:
-      - id: poetry-check-lock
-
   - repo: https://github.com/timothycrosley/isort
-    rev: 2e02c195afdb499be9068ca0d08c9d7d45912d4d  # frozen: 5.5.4
+    rev: 473d150c1db60f4614a574e30993e9e0d3ca0cce  # frozen: 5.7.0
     hooks:
       - id: isort
 

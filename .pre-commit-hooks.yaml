@@ -1,21 +1,21 @@
-  - id: yamlfmt
-    name: format yaml
-    entry: yamlfmt
-    language: python
-    types: [yaml]
-    args: [-w]
+- id: yamlfmt
+  name: format yaml
+  entry: yamlfmt
+  language: python
+  types: [yaml]
+  args: [-w]
 
-  - id: poetry-check-lock
-    name: Check poetry.lock fresh
-    entry: poetry_check_lock
-    require_serial: false
-    language: python
-    pass_filenames: false
-    files: ^(pyproject\.toml)|(poetry\.lock)$
+- id: poetry-check-lock
+  name: Check poetry.lock fresh
+  entry: poetry_check_lock
+  require_serial: false
+  language: python
+  pass_filenames: false
+  files: ^(pyproject\.toml)|(poetry\.lock)$
 
-  - id: find-trailing-comma
-    name: Find trailing commas
-    description: Find trailing commas which make single value a tuple
-    entry: find_trailing_comma
-    language: python
-    types: [python]
+- id: find-trailing-comma
+  name: Find trailing commas
+  description: Find trailing commas which make single value a tuple
+  entry: find_trailing_comma
+  language: python
+  types: [python]
