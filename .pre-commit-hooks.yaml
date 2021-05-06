@@ -19,3 +19,10 @@
   entry: find_trailing_comma
   language: python
   types: [python]
+
+- id: force-yaml-file-ext
+  name: Find trailing commas
+  description: force all yaml files have same extension.
+  entry: force_yaml_extension
+  language: python
+  types: [yaml]

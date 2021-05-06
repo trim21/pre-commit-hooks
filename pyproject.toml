@@ -19,6 +19,7 @@ tokenize-rt = "^4.0.0"
 yamlfmt = 'pre_commit_hooks.yamlfmt:main'
 poetry_check_lock = 'pre_commit_hooks.poetry_check_lock:main'
 find_trailing_comma = 'pre_commit_hooks.find_trailing_comma:main'
+force_yaml_extension = 'pre_commit_hooks.force_yaml_extension:main'
 
 [tool.poetry.dev-dependencies]
 # tests
