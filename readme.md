@@ -5,6 +5,9 @@
       - id: yamlfmt
       - id: poetry-check-lock
       - id: find-trailing-comma
+      - id: find-trailing-comma
+      - id: force-yaml-file-ext
+        args: [-e, yml]
 ```
 
 
