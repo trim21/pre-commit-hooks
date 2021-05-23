@@ -3,10 +3,18 @@ from typing import Any
 
 from ruamel.yaml import CommentToken
 from ruamel.yaml.emitter import Emitter
+from ruamel.yaml.representer import RoundTripRepresenter
 
 pattern1 = re.compile("\n{3,}")
-# pattern2 = re.compile("\n +")
 pattern3 = re.compile("# *")
+
+
+class ForceNoneRepresenter(RoundTripRepresenter):
+    def represent_none(self, data):  # type: (Any) -> Any
+        return self.represent_scalar("tag:yaml.org,2002:null", "null")
+
+
+ForceNoneRepresenter.add_representer(type(None), ForceNoneRepresenter.represent_none)
 
 
 class RemoveMultiEmptyLineEmitter(Emitter):
@@ -25,7 +33,12 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         self.allow_space_break = True
 
     def write_plain(self, text, split=True):  # type: (Any, Any) -> None
+        # print("write_plain", repr(text))
         super().write_plain(text, False)
+
+    def write_literal(self, text, comment=None):
+        # print("write_literal", repr(text))
+        super().write_literal(text, comment)
 
     def write_comment(self, comment: CommentToken, *args, **kwargs):
         """write line break or comment with line break"""
@@ -38,9 +51,17 @@ class RemoveMultiEmptyLineEmitter(Emitter):
             leading = ""
             if comment.value.startswith("\n"):
                 leading = "\n"
-                indent = (self.indent or 0) - 2
-                if self.mapping_context:
-                    indent += 2
+                if comment.value.startswith("\n\n"):
+                    leading = "\n\n"
+                    indent = 0
+                else:
+                    indent = (self.indent or 0) - self.best_map_indent
+                    # if self.mapping_context:
+                    #     indent += self.best_map_indent
+
+                    # if self.mapping_context:
+                    # if self.sequence_context:
+                    #     indent += 2
                 if stripped == "#":
                     comment.value = "\n"
                 else:
@@ -54,8 +75,9 @@ class RemoveMultiEmptyLineEmitter(Emitter):
 
             if not self.column:
                 indent = self.indent or 0
-                if self.mapping_context or self.sequence_context:
-                    indent += 2
+                if self.sequence_context:
+                    indent += self.best_map_indent
+
                 comment.value = (
                     leading + " " * indent + "# " + comment.value.lstrip("\n# ")
                 )
@@ -68,4 +90,14 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         else:
             comment.start_mark.column = 0
 
+        value = comment.value.split("\n")
+
+        if len(value) >= 2:
+            for i in range(2, len(value)):
+                if value[i - 1] == "":
+                    value[i] = value[i].strip()
+
+        comment.value = "\n".join(value)
+
+        # print(indent, repr(comment.value))
         super().write_comment(comment, *args, **kwargs)

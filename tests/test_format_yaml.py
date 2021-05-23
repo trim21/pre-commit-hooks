@@ -22,11 +22,13 @@ def format_yaml(tmpdir):
     return format_f
 
 
-def assert_string_eq(before, after):
-    assert after == before, "".join(
+def assert_string_eq(result, expected):
+    assert result == expected, "\n" + "".join(
         difflib.unified_diff(
-            after.splitlines(True),
-            before.splitlines(True),
+            expected.splitlines(True),
+            result.splitlines(True),
+            tofile="result",
+            fromfile="expected",
         ),
     )
 
@@ -41,6 +43,25 @@ def test_line_break(format_yaml):
 
 def test_line_break_2(format_yaml):
     assert format_yaml("a: 1\r\nb: 2\r\n") == "a: 1\nb: 2\n"
+
+
+def test_list_empty_element(format_yaml):
+    assert_string_eq(
+        format_yaml(
+            """
+a:
+- a
+-
+# comment
+""",
+        ),
+        """\
+a:
+  - a
+  - null
+  # comment
+""",
+    )
 
 
 def test_list_indent(format_yaml):
@@ -210,9 +231,8 @@ def test_top_array_with_indent(format_yaml):
 
 
 def test_comment_indent(format_yaml):
-    assert_string_eq(
-        format_yaml(
-            """
+    result = format_yaml(
+        """\
 # a comment
 repos:
   - repo: https://github.com/Trim21/pre-commit-hooks
@@ -227,15 +247,16 @@ repos:
                # check for file bigger than 500kb
           - --autofix
 # c comment
-""",
-        ),
-        """\
+"""
+    )
+
+    expected = """\
 # a comment
 repos:
   - repo: https://github.com/Trim21/pre-commit-hooks
     rev: 1586f0d19e5685e59cbe827988f5360df0f334b5  # frozen: v0.3.0
     hooks:
-      # b comment
+    # b comment
       - id: poetry-check-lock
       - id: pretty-format-json
         args:
@@ -243,5 +264,111 @@ repos:
           # check for file bigger than 500kb
           - --autofix
           # c comment
+"""
+
+    assert result == expected
+
+
+def test_comment_indent_after_map(format_yaml):
+    assert_string_eq(
+        format_yaml(
+            """\
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+  # Build documentation in the docs/ directory with Sphinx
+sphinx:
+  configuration: docs/source/conf.py
+    # Optionally build your docs in additional formats such as PDF and ePub
+formats:
+  - htmlzip
+
+# Optionally set the version of Python and requirements required to build your docs
+python:
+  version: 3.7
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
+"""
+        ),
+        """\
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+# Build documentation in the docs/ directory with Sphinx
+sphinx:
+  configuration: docs/source/conf.py
+  # Optionally build your docs in additional formats such as PDF and ePub
+formats:
+  - htmlzip
+
+# Optionally set the version of Python and requirements required to build your docs
+python:
+  version: 3.7
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
 """,
     )
+
+
+def test_multi_line_comment(format_yaml):
+    raw = """
+a: 1  # 3
+
+  # 1 comment
+b: 2
+"""
+
+    expected = """\
+a: 1  # 3
+
+# 1 comment
+b: 2
+"""
+    assert_string_eq(format_yaml(raw), expected)
+
+
+def test_multi_line_comment2(format_yaml):
+    raw = """\
+a: 1
+        # 3
+
+  # 1 comment
+b: 2
+"""
+
+    expected = """\
+a: 1
+# 3
+
+# 1 comment
+b: 2
+"""
+    assert format_yaml(raw) == expected
+
+
+def test_map_comment_indent(format_yaml):
+    result = format_yaml(
+        """\
+result:
+  prop1: value1
+# comment
+  prop2: value2
+"""
+    )
+    expected = """\
+result:
+  prop1: value1
+  # comment
+  prop2: value2
+"""
+    assert result == expected

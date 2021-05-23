@@ -6,10 +6,13 @@ from textwrap import dedent
 
 from ruamel import yaml
 
-from pre_commit_hooks._yaml_dumper import RemoveMultiEmptyLineEmitter
+from pre_commit_hooks._yaml_dumper import (
+    ForceNoneRepresenter,
+    RemoveMultiEmptyLineEmitter,
+)
 
 
-def round_trip(sin, indent: int, width: int):
+def _round_trip(sin, indent: int, width: int):
     inst = yaml.YAML(typ="rt", pure=True)
     inst.width = width  # type: ignore
     inst.old_indent = indent  # type: ignore
@@ -17,6 +20,7 @@ def round_trip(sin, indent: int, width: int):
     inst.sequence_dash_offset = indent
     inst.map_indent = indent  # type: ignore
     inst.Emitter = RemoveMultiEmptyLineEmitter
+    inst.Representer = ForceNoneRepresenter
     y = inst.load(sin)
 
     with StringIO() as stream:
@@ -24,18 +28,30 @@ def round_trip(sin, indent: int, width: int):
         return stream.getvalue()
 
 
+def round_trip(sin, indent: int, width: int):
+    after = _round_trip(sin, indent, width)
+    return after
+    again = _round_trip(after, indent, width)
+
+    while after != again:
+        after = again
+        again = _round_trip(after, indent, width)
+
+    return again
+
+
 def format_file(fs, write, indent: int, width: int):
     ret = 0
     with open(fs, encoding="utf8", newline="\n") as f:
         before = f.read()
-    with StringIO(initial_value=before.replace("\r\n", "\n"), newline="\n") as s:
-        s.seek(0)
-        after = (
-            "\n".join(
-                dedent(round_trip(s, indent, width)).strip(" \n").splitlines(),
-            ).strip()
-            + "\n"
-        )
+    after = (
+        "\n".join(
+            dedent(round_trip(before.replace("\r\n", "\n"), indent, width))
+            .strip(" \n")
+            .splitlines(),
+        ).strip()
+        + "\n"
+    )
     if before != after:
         if write:
             print(f"fixing {fs}")
