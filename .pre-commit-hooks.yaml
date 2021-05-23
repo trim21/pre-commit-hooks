@@ -26,4 +26,4 @@
   entry: force_yaml_extension
   language: python
   types: [yaml]
-  exclude: codecov.yml$
+  exclude: (codecov\.yml|\.pre-commit-(config|hooks)\.yaml)$
