@@ -32,7 +32,7 @@ jobs:
         run: coverage run -m pytest
 
       - name: local pre-commit
-        run: coverage run -m pre-commit try-repo .
+        run: coverage run -m pre_commit try-repo .
 
       - run: bash <(curl -s https://codecov.io/bash) -F py_${PYTHON//./}
         shell: bash
