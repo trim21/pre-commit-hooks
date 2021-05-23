@@ -6,19 +6,22 @@ from textwrap import dedent
 
 from ruamel import yaml
 
-from pre_commit_hooks._yaml_dumper import RemoveMultiEmptyLineRoundTripDumper
+from pre_commit_hooks._yaml_dumper import RemoveMultiEmptyLineEmitter
 
 
 def round_trip(sin, indent: int, width: int):
-    y = yaml.round_trip_load(sin, preserve_quotes=False)
-    return yaml.round_trip_dump(
-        y,
-        Dumper=RemoveMultiEmptyLineRoundTripDumper,
-        allow_unicode=True,
-        indent=indent,
-        default_flow_style=True,
-        width=width,
-    )
+    inst = yaml.YAML(typ="rt", pure=True)
+    inst.width = width
+    inst.old_indent = indent
+    inst.sequence_indent = indent * 2
+    inst.sequence_dash_offset = indent
+    inst.map_indent = indent * 2
+    inst.Emitter = RemoveMultiEmptyLineEmitter
+    y = inst.load(sin)
+
+    with StringIO() as stream:
+        inst.dump(y, stream)
+        return stream.getvalue()
 
 
 def format_file(fs, write, indent: int, width: int):
