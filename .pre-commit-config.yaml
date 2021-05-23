@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/Trim21/pre-commit-hooks
-    rev: 1586f0d19e5685e59cbe827988f5360df0f334b5  # frozen: v0.3.0
+    rev: 6b5b7a4ff8f80cedf70a6d556896163db7e2189f  # frozen: v0.4.0
     hooks:
       - id: yamlfmt
       - id: poetry-check-lock
@@ -37,7 +37,7 @@ repos:
         args: [--remove]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: c2e71d194a5991d8f6a2e37813c8d206eb19e3d1  # frozen: v2.16.0
+    rev: 2795f7108b897f819068a7092b0802db65915736  # frozen: v2.18.1
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
