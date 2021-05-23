@@ -6,7 +6,7 @@ from textwrap import dedent
 
 from ruamel import yaml
 
-from ._yaml_dumper import RemoveMultiEmptyLineEmitter
+from pre_commit_hooks._yaml_dumper import RemoveMultiEmptyLineEmitter
 
 
 def round_trip(sin, indent: int, width: int):
@@ -39,7 +39,6 @@ def format_file(fs, write, indent: int, width: int):
     if before != after:
         if write:
             print(f"fixing {fs}")
-        else:
             print(
                 "".join(
                     difflib.unified_diff(
