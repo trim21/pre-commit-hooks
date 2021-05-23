@@ -1,6 +1,5 @@
 repos:
   - repo: .
-    rev: HEAD
     hooks:
       - id: find-trailing-comma
       - id: force-yaml-file-ext
