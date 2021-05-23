@@ -90,13 +90,9 @@ def _find_danger(contents_text):
                     line = token.offset.line
                     dangers.append((line, contents_text.splitlines()[line - 1]))
         elif token.offset in visitor.literals:
-            print(token.src)
             t: ast.Tuple = visitor.literals[token.offset]
-            print(t)
             if token.src == "(":
                 continue
-            print(t)
-            print(t.elts)
             if len(t.elts) == 1:
                 r = _find_tuple(i, tokens)
                 if not r:
