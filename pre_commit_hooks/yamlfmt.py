@@ -15,7 +15,7 @@ def round_trip(sin, indent: int, width: int):
     inst.old_indent = indent  # type: ignore
     inst.sequence_indent = indent * 2  # type: ignore
     inst.sequence_dash_offset = indent
-    inst.map_indent = indent * 2  # type: ignore
+    inst.map_indent = indent  # type: ignore
     inst.Emitter = RemoveMultiEmptyLineEmitter
     y = inst.load(sin)
 
