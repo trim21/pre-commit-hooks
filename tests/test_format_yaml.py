@@ -372,3 +372,25 @@ result:
   prop2: value2
 """
     assert result == expected
+
+
+def test_multi_line_comment3(format_yaml):
+    result = format_yaml(
+        """\
+result:
+  prop1: value1
+# comment 1
+
+# comment 2
+      # comment 3
+"""
+    )
+    expected = """\
+result:
+  prop1: value1
+  # comment 1
+
+# comment 2
+# comment 3
+"""
+    assert result == expected

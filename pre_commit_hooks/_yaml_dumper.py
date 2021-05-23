@@ -92,12 +92,16 @@ class RemoveMultiEmptyLineEmitter(Emitter):
 
         value = comment.value.split("\n")
 
-        if len(value) >= 2:
-            for i in range(2, len(value)):
-                if value[i - 1] == "":
-                    value[i] = value[i].strip()
+        find_empty_line = False
+
+        for i, line in enumerate(value):
+            if i < 1:
+                continue
+            if line == "":
+                find_empty_line = True
+            if find_empty_line:
+                value[i] = line.strip()
 
         comment.value = "\n".join(value)
 
-        # print(indent, repr(comment.value))
         super().write_comment(comment, *args, **kwargs)
