@@ -35,18 +35,6 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         # comment.value = pattern1.sub("\n" * line_break_num, comment.value)
         stripped = comment.value.strip()
 
-        print(
-            "column",
-            self.column,
-            "start_mark.column",
-            comment.start_mark.column,
-            repr(comment.value),
-            self.mapping_context,
-            self.sequence_context,
-            self.indent,
-            repr(stripped),
-        )
-
         leading = ""
 
         if stripped:
@@ -81,7 +69,5 @@ class RemoveMultiEmptyLineEmitter(Emitter):
                 comment.start_mark.column = self.column + 2
         else:
             comment.start_mark.column = 0
-
-        print(repr(comment.value))
 
         super().write_comment(comment, *args, **kwargs)
