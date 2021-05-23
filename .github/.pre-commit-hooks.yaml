@@ -1,6 +1,6 @@
 repos:
   - repo: .
-    rev: a6981f28492b9f48bbfacac2798d03982b0ff70f
+    rev: HEAD
     hooks:
       - id: find-trailing-comma
       - id: force-yaml-file-ext
