@@ -1,8 +1,0 @@
-repos:
-  - repo: .
-    hooks:
-      - id: find-trailing-comma
-      - id: force-yaml-file-ext
-      - id: poetry-check-lock
-      - id: yamlfmt
-        exclude: codecov\.yml$
