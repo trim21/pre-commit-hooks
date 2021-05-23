@@ -6,16 +6,16 @@ from textwrap import dedent
 
 from ruamel import yaml
 
-from pre_commit_hooks._yaml_dumper import RemoveMultiEmptyLineEmitter
+from ._yaml_dumper import RemoveMultiEmptyLineEmitter
 
 
 def round_trip(sin, indent: int, width: int):
     inst = yaml.YAML(typ="rt", pure=True)
-    inst.width = width
-    inst.old_indent = indent
-    inst.sequence_indent = indent * 2
+    inst.width = width  # type: ignore
+    inst.old_indent = indent  # type: ignore
+    inst.sequence_indent = indent * 2  # type: ignore
     inst.sequence_dash_offset = indent
-    inst.map_indent = indent * 2
+    inst.map_indent = indent * 2  # type: ignore
     inst.Emitter = RemoveMultiEmptyLineEmitter
     y = inst.load(sin)
 
