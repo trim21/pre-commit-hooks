@@ -27,6 +27,8 @@ jobs:
         run: git config --global core.autocrlf false
 
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: '2'
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}

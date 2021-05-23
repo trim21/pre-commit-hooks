@@ -39,6 +39,7 @@ def format_file(fs, write, indent: int, width: int):
     if before != after:
         if write:
             print(f"fixing {fs}")
+        else:
             print(
                 "".join(
                     difflib.unified_diff(

@@ -32,15 +32,56 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         line_break_num = 2
         if comment.value.startswith("#"):
             line_break_num = 3
+        # comment.value = pattern1.sub("\n" * line_break_num, comment.value)
+        stripped = comment.value.strip()
+
+        print(
+            "column",
+            self.column,
+            "start_mark.column",
+            comment.start_mark.column,
+            repr(comment.value),
+            self.mapping_context,
+            self.sequence_context,
+            self.indent,
+            repr(stripped),
+        )
+
+        leading = ""
+
+        if stripped:
+            if comment.value.startswith("\n"):
+                leading = "\n"
+                indent = (self.indent or 0) - 2
+                if self.mapping_context:
+                    indent += 2
+                if stripped == "#":
+                    comment.value = "\n"
+                else:
+                    comment.value = (
+                        leading + " " * indent + "# " + comment.value.lstrip("\n# ")
+                    )
+            else:
+                comment.value = pattern3.sub("# ", comment.value)
+                if comment.value.strip() == "#":
+                    comment.value = comment.value.lstrip("# ")
+
+            if not self.column:
+                indent = self.indent or 0
+                if self.mapping_context or self.sequence_context:
+                    indent += 2
+                comment.value = (
+                    leading + " " * indent + "# " + comment.value.lstrip("\n# ")
+                )
+
         comment.value = pattern1.sub("\n" * line_break_num, comment.value)
-        if comment.start_mark.column:
-            # comment after line
-            comment.value = pattern3.sub("# ", comment.value)
-            if comment.value.strip() == "#":
-                comment.value = comment.value.lstrip("# ")
+
         if self.column:
             if comment.value.strip():
                 comment.start_mark.column = self.column + 2
         else:
             comment.start_mark.column = 0
+
+        print(repr(comment.value))
+
         super().write_comment(comment, *args, **kwargs)
