@@ -63,6 +63,3 @@ jobs:
 
       - name: pre-commit
         run: pre-commit run --all-files --show-diff-on-failure && pre-commit gc
-
-      - name: local pre-commit
-        run: pre-commit try-repo .

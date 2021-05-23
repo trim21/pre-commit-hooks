@@ -27,8 +27,13 @@ jobs:
           python-version: ${{ matrix.python }}
       - uses: Trim21/setup-poetry@dist/v1
       - uses: Trim21/install-poetry-project@dist/v1
+
       - name: test
         run: coverage run -m pytest
+
+      - name: local pre-commit
+        run: coverage run -m pre-commit try-repo .
+
       - run: bash <(curl -s https://codecov.io/bash) -F py_${PYTHON//./}
         shell: bash
         env:
