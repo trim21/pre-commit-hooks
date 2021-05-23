@@ -219,17 +219,12 @@ repos:
     rev: 1586f0d19e5685e59cbe827988f5360df0f334b5  # frozen: v0.3.0
     hooks:
 # b comment
-      - id: yamlfmt
       - id: poetry-check-lock
         #
-      - id: find-trailing-comma
       - id: pretty-format-json
         args:
           - --no-ensure-ascii
                # check for file bigger than 500kb
-          - --no-sort-keys
-          - --indent
-          - '2'
           - --autofix
 # c comment
 """,
@@ -241,16 +236,11 @@ repos:
     rev: 1586f0d19e5685e59cbe827988f5360df0f334b5  # frozen: v0.3.0
     hooks:
       # b comment
-      - id: yamlfmt
       - id: poetry-check-lock
-      - id: find-trailing-comma
       - id: pretty-format-json
         args:
           - --no-ensure-ascii
           # check for file bigger than 500kb
-          - --no-sort-keys
-          - --indent
-          - '2'
           - --autofix
           # c comment
 """,

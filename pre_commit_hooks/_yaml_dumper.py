@@ -32,7 +32,6 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         line_break_num = 2
         if comment.value.startswith("#"):
             line_break_num = 3
-        # comment.value = pattern1.sub("\n" * line_break_num, comment.value)
         stripped = comment.value.strip()
 
         if stripped:
