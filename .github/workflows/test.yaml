@@ -33,10 +33,10 @@ jobs:
       - name: test
         run: coverage run -m pytest
 
-      - name: local pre-commit
-        run: coverage run -m pre_commit try-repo -v --show-diff-on-failure --all-files .
-
       - run: bash <(curl -s https://codecov.io/bash) -F py_${PYTHON//./}
         shell: bash
         env:
           PYTHON: ${{ matrix.python }}
+
+      - name: local pre-commit
+        run: pre-commit try-repo -v --show-diff-on-failure --all-files .
