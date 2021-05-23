@@ -1,3 +1,4 @@
+import difflib
 from unittest import mock
 
 import pytest
@@ -19,6 +20,15 @@ def format_yaml(tmpdir):
             return f.read().decode()
 
     return format_f
+
+
+def assert_string_eq(before, after):
+    assert after == before, "".join(
+        difflib.unified_diff(
+            after.splitlines(True),
+            before.splitlines(True),
+        ),
+    )
 
 
 def test_object_space(format_yaml):
@@ -112,12 +122,11 @@ repos:
 - repo:  https://github.com/Trim21/pre-commit-hooks
 """,
     )
-    print(repr(expected), repr(actual))
-    assert actual == expected
+    assert_string_eq(actual, expected)
 
 
 def test_blank_line_2(format_yaml):
-    assert (
+    assert_string_eq(
         format_yaml(
             """
 default_stages: [commit]
@@ -140,8 +149,8 @@ repos:
       - id: check-ast
       - id: check-builtin-literals
 """,
-        )
-        == """
+        ),
+        """
 default_stages: [commit]
 
 
@@ -159,7 +168,7 @@ repos:
       - id: check-case-conflict
       - id: check-ast
       - id: check-builtin-literals
-""".lstrip()
+""".lstrip(),
     )
 
 
@@ -197,4 +206,42 @@ def test_top_array_with_indent(format_yaml):
 - id: poetry-check-lock
   name: Check poetry.lock fresh
 """.lstrip()
+    )
+
+
+def test_comment_indent(format_yaml):
+    assert_string_eq(
+        format_yaml(
+            """
+# a comment
+repos:
+  - repo: https://github.com/Trim21/pre-commit-hooks
+    rev: 1586f0d19e5685e59cbe827988f5360df0f334b5  # frozen: v0.3.0
+    hooks:
+# b comment
+      - id: poetry-check-lock
+        #
+      - id: pretty-format-json
+        args:
+          - --no-ensure-ascii
+               # check for file bigger than 500kb
+          - --autofix
+# c comment
+""",
+        ),
+        """\
+# a comment
+repos:
+  - repo: https://github.com/Trim21/pre-commit-hooks
+    rev: 1586f0d19e5685e59cbe827988f5360df0f334b5  # frozen: v0.3.0
+    hooks:
+      # b comment
+      - id: poetry-check-lock
+      - id: pretty-format-json
+        args:
+          - --no-ensure-ascii
+          # check for file bigger than 500kb
+          - --autofix
+          # c comment
+""",
     )

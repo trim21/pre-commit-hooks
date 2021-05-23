@@ -31,7 +31,7 @@ repos:
           - --indent
           - '2'
           - --autofix
-      # check for file bigger than 500kb
+          # check for file bigger than 500kb
       - id: end-of-file-fixer
       - id: fix-encoding-pragma
         args: [--remove]
