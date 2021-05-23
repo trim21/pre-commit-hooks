@@ -35,9 +35,8 @@ class RemoveMultiEmptyLineEmitter(Emitter):
         # comment.value = pattern1.sub("\n" * line_break_num, comment.value)
         stripped = comment.value.strip()
 
-        leading = ""
-
         if stripped:
+            leading = ""
             if comment.value.startswith("\n"):
                 leading = "\n"
                 indent = (self.indent or 0) - 2
