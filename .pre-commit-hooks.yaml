@@ -1,10 +1,3 @@
-- id: yamlfmt
-  name: format yaml
-  entry: yamlfmt
-  language: python
-  types: [yaml]
-  args: [-w]
-
 - id: poetry-check-lock
   name: Check poetry.lock fresh
   entry: poetry_check_lock

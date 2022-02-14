@@ -2,7 +2,6 @@
   - repo: https://github.com/Trim21/pre-commit-hooks
     rev: ''
     hooks:
-      - id: yamlfmt
       - id: poetry-check-lock
       - id: find-trailing-comma
       - id: force-yaml-file-ext
