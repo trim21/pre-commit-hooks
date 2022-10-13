@@ -7,7 +7,7 @@
         args: [-e, yml]
 
 
-      # deprecated, use `--check` args with `poetry-lock` 
+      # deprecated, use `--check` args with `poetry-lock`
       # from official repo https://github.com/python-poetry/poetry
       # - id: poetry-check-lock
 ```
