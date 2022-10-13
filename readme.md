@@ -1,5 +1,5 @@
 ```yaml
-  - repo: https://github.com/Trim21/pre-commit-hooks
+  - repo: https://github.com/trim21/pre-commit-hooks
     rev: ''
     hooks:
       - id: find-trailing-comma
