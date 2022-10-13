@@ -1,6 +1,6 @@
 ```yaml
   - repo: https://github.com/trim21/pre-commit-hooks
-    rev: ''
+    rev: 'v0.5.1'
     hooks:
       - id: find-trailing-comma
       - id: force-yaml-file-ext
