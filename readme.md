@@ -2,10 +2,11 @@
   - repo: https://github.com/Trim21/pre-commit-hooks
     rev: ''
     hooks:
-      - id: poetry-check-lock
       - id: find-trailing-comma
       - id: force-yaml-file-ext
         args: [-e, yml]
+
+      - id: poetry-check-lock # deprecated, use `--check` args with `poetry-lock` from official repo https://github.com/python-poetry/poetry
 ```
 
 
