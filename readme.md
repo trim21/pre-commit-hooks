@@ -6,7 +6,10 @@
       - id: force-yaml-file-ext
         args: [-e, yml]
 
-      - id: poetry-check-lock # deprecated, use `--check` args with `poetry-lock` from official repo https://github.com/python-poetry/poetry
+
+      # deprecated, use `--check` args with `poetry-lock` 
+      # from official repo https://github.com/python-poetry/poetry
+      # - id: poetry-check-lock
 ```
 
 
