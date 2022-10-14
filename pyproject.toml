@@ -12,7 +12,7 @@ packages = [{ include = "pre_commit_hooks" }]
 [tool.poetry.dependencies]
 python = "^3.7"
 poetry = "^1.1.0"
-tokenize-rt = "^4.0.0"
+tokenize-rt = "^4.0.0 || ^5.0.0"
 
 [tool.poetry.scripts]
 poetry_check_lock = 'pre_commit_hooks.poetry_check_lock:main'
