@@ -106,11 +106,11 @@ pylev = ">=1.3,<2.0"
 
 [[package]]
 name = "colorama"
-version = "0.4.5"
+version = "0.4.6"
 description = "Cross-platform colored terminal text."
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 
 [[package]]
 name = "coverage"
@@ -284,7 +284,7 @@ lxml = ["lxml"]
 
 [[package]]
 name = "identify"
-version = "2.5.6"
+version = "2.5.8"
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -742,11 +742,11 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "tomlkit"
-version = "0.11.5"
+version = "0.11.6"
 description = "Style preserving TOML library"
 category = "main"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.6"
 
 [[package]]
 name = "typed-ast"
@@ -805,7 +805,7 @@ python-versions = "*"
 
 [[package]]
 name = "zipp"
-version = "3.9.0"
+version = "3.10.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 category = "main"
 optional = false
@@ -920,8 +920,8 @@ clikit = [
     {file = "clikit-0.6.2.tar.gz", hash = "sha256:442ee5db9a14120635c5990bcdbfe7c03ada5898291f0c802f77be71569ded59"},
 ]
 colorama = [
-    {file = "colorama-0.4.5-py2.py3-none-any.whl", hash = "sha256:854bf444933e37f5824ae7bfc1e98d5bce2ebe4160d46b5edf346a89358e99da"},
-    {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
+    {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
+    {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
 coverage = [
     {file = "coverage-6.5.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ef8674b0ee8cc11e2d574e3e2998aea5df5ab242e012286824ea3c6970580e53"},
@@ -1052,8 +1052,8 @@ html5lib = [
     {file = "html5lib-1.1.tar.gz", hash = "sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f"},
 ]
 identify = [
-    {file = "identify-2.5.6-py2.py3-none-any.whl", hash = "sha256:b276db7ec52d7e89f5bc4653380e33054ddc803d25875952ad90b0f012cbcdaa"},
-    {file = "identify-2.5.6.tar.gz", hash = "sha256:6c32dbd747aa4ceee1df33f25fed0b0f6e0d65721b15bd151307ff7056d50245"},
+    {file = "identify-2.5.8-py2.py3-none-any.whl", hash = "sha256:48b7925fe122720088aeb7a6c34f17b27e706b72c61070f27fe3789094233440"},
+    {file = "identify-2.5.8.tar.gz", hash = "sha256:7a214a10313b9489a0d61467db2856ae8d0b8306fc923e03a9effa53d8aedc58"},
 ]
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
@@ -1326,8 +1326,8 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 tomlkit = [
-    {file = "tomlkit-0.11.5-py3-none-any.whl", hash = "sha256:f2ef9da9cef846ee027947dc99a45d6b68a63b0ebc21944649505bf2e8bc5fe7"},
-    {file = "tomlkit-0.11.5.tar.gz", hash = "sha256:571854ebbb5eac89abcb4a2e47d7ea27b89bf29e09c35395da6f03dd4ae23d1c"},
+    {file = "tomlkit-0.11.6-py3-none-any.whl", hash = "sha256:07de26b0d8cfc18f871aec595fda24d95b08fef89d147caa861939f37230bf4b"},
+    {file = "tomlkit-0.11.6.tar.gz", hash = "sha256:71b952e5721688937fb02cf9d354dbcf0785066149d2855e44531ebdd2b65d73"},
 ]
 typed-ast = [
     {file = "typed_ast-1.5.4-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:669dd0c4167f6f2cd9f57041e03c3c2ebf9063d0757dc89f79ba1daa2bfca9d4"},
@@ -1372,6 +1372,6 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 zipp = [
-    {file = "zipp-3.9.0-py3-none-any.whl", hash = "sha256:972cfa31bc2fedd3fa838a51e9bc7e64b7fb725a8c00e7431554311f180e9980"},
-    {file = "zipp-3.9.0.tar.gz", hash = "sha256:3a7af91c3db40ec72dd9d154ae18e008c69efe8ca88dde4f9a731bb82fe2f9eb"},
+    {file = "zipp-3.10.0-py3-none-any.whl", hash = "sha256:4fcb6f278987a6605757302a6e40e896257570d11c51628968ccb2a47e80c6c1"},
+    {file = "zipp-3.10.0.tar.gz", hash = "sha256:7a7262fd930bd3e36c50b9a64897aec3fafff3dfdeec9623ae22b40e93f99bb8"},
 ]
