@@ -23,7 +23,7 @@ force_yaml_extension = 'pre_commit_hooks.force_yaml_extension:main'
 # tests
 pytest = "==7.2.0"
 pytest-github-actions-annotate-failures = "==0.1.8"
-coverage = "==6.5.0"
+coverage = "==7.0.0"
 # linter and formatter
 pre-commit = "==2.20.0"
 flake8 = '==5.0.4'
